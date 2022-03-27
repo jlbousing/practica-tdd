@@ -25,10 +25,14 @@
                                 <td class="px-4 py-2">
                                     <a href="repositories/{{$repository->id}}">Ver</a>
                                 </td>
+                                <td class="px-4 py-2">
+                                    <!-- EXPERIMENTANDO CON OTRO METODO PARA ACCEDER A EDIT -->
+                                    <a href="{{route("$repositories.edit",$repository)}}">Editar</a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="2">No hay repositorios creados</td>
+                                <td colspan="4">No hay repositorios creados</td>
                             </tr>
                         @endforelse
                     </tbody>

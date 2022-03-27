@@ -28,10 +28,22 @@ class RepositoryController extends Controller
         ]);
     }
 
+
     public function store(RepositoryRequest $request)
     {
         $request->user()->repositories()->create($request->all());
         return redirect()->route("repositories.index");
+    }
+
+    public function edit(Repository $repository)
+    {
+        if(Auth::user()->id != $repository->user_id){
+            abort(403);
+        }
+
+        return view("repositories.edit",[
+            "repository" => $repository
+        ]);
     }
 
     public function update(RepositoryRequest $request, Repository $repository)
