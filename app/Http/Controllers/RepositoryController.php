@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Repository;
 use App\Http\Requests\RepositoryRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RepositoryController extends Controller
 {
@@ -32,6 +33,11 @@ class RepositoryController extends Controller
 
     public function destroy(Repository $repository)
     {
+
+        if(Auth::user()->id != $repository->user_id){
+            abort(403);
+        }
+
         $repository->delete();
 
         return redirect("repositories");
