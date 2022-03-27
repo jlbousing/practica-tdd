@@ -9,9 +9,23 @@ use Illuminate\Support\Facades\Auth;
 
 class RepositoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        return view("repositories.index",[
+            "repositories" => $request->user()->repositories
+        ]);
+    }
 
+    public function show(Repository $repository)
+    {
+        if(Auth::user()->id != $repository->user_id)
+        {
+            abort(403);
+        }
+
+        return view("repositories.show",[
+            "repository" => $repository
+        ]);
     }
 
     public function store(RepositoryRequest $request)
