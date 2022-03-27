@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Repository;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RepositoryRequest;
 
 class RepositoryController extends Controller
 {
@@ -13,20 +13,22 @@ class RepositoryController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(RepositoryRequest $request)
     {
         $request->user()->repositories()->create($request->all());
         return redirect()->route("repositories.index");
     }
 
-    public function update(Request $request, Repository $repository)
+    public function update(RepositoryRequest $request, Repository $repository)
     {
-        //$data = $request->all();
-        //$repository->url = $data["url"];
-        //$repository->description = $data["description"];
-        //$repository->save();
-
         $repository->update($request->all());
         return redirect()->route("repositories.edit",$repository);
+    }
+
+    public function destroy(Repository $repository)
+    {
+        $repository->delete();
+
+        return redirect("repositories");
     }
 }
