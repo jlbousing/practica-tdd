@@ -46,8 +46,13 @@ class RepositoryControllerTest extends TestCase
 
     public function test_update()
     {
+        //DEBE HABER UN USUARIO LOGEADO
+        $user = User::factory()->create();
+
         //EXISTE UN DATO QUE SE QUIERE ACTUALIZAR
-        $repository = Repository::factory()->create();
+        $repository = Repository::factory()->create([
+            "user_id" => $user->id
+        ]);
 
         //SE LLENA EL FORMULARIO CON LA INFORMACION QUE SE QUIERE EDITAR
         $data = [
@@ -55,8 +60,7 @@ class RepositoryControllerTest extends TestCase
             "description" => $this->faker->text
         ];
 
-        //DEBE HABER UN USUARIO LOGEADO
-        $user = User::factory()->create();
+
 
         //SE ACTUA COMO EL USUARIO LOGEADO Y SE ACTUALIZA Y SE REDIRECCIONA
         $this->actingAs($user)
@@ -66,6 +70,8 @@ class RepositoryControllerTest extends TestCase
         //EL DATO SE REGISTRA EN LA BD
         $this->assertDatabaseHas("repositories",$data);
     }
+
+
 
     public function test_validate_store()
     {
@@ -120,5 +126,23 @@ class RepositoryControllerTest extends TestCase
             "url" => $repository->url,
             "description" => $repository->description
         ]);
+    }
+
+    public function test_update_policy()
+    {
+
+        $user = User::factory()->create(); // id = 1
+
+        $repository = Repository::factory()->create(); //user_id = 2
+
+        $data = [
+            "url" => $this->faker->url,
+            "description" => $this->faker->text
+        ];
+
+        $this->actingAs($user)
+            ->put("repositories/{$repository->id}",$data)
+            ->assertStatus(403);
+
     }
 }
