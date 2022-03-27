@@ -19,10 +19,7 @@ class RepositoryController extends Controller
 
     public function show(Repository $repository)
     {
-        if(Auth::user()->id != $repository->user_id)
-        {
-            abort(403);
-        }
+        $this->authorize("pass",$repository);
 
         return view("repositories.show",[
             "repository" => $repository
@@ -43,9 +40,7 @@ class RepositoryController extends Controller
 
     public function edit(Repository $repository)
     {
-        if(Auth::user()->id != $repository->user_id){
-            abort(403);
-        }
+        $this->authorize("pass",$repository);
 
         return view("repositories.edit",[
             "repository" => $repository
@@ -55,9 +50,7 @@ class RepositoryController extends Controller
     public function update(RepositoryRequest $request, Repository $repository)
     {
 
-        if($request->user()->id != $repository->user_id){
-            abort(403);
-        }
+        $this->authorize("pass",$repository);
 
         $repository->update($request->all());
         return redirect()->route("repositories.edit",$repository);
@@ -65,10 +58,7 @@ class RepositoryController extends Controller
 
     public function destroy(Repository $repository)
     {
-
-        if(Auth::user()->id != $repository->user_id){
-            abort(403);
-        }
+        $this->authorize("pass",$repository);
 
         $repository->delete();
 
