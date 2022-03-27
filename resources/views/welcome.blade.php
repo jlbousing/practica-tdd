@@ -12,6 +12,7 @@
     </head>
     <body class="bg-gray-200">
 
+        {{dd("hola desde el navegador ")}}
         @foreach($repositories as $repository)
             <h2>{{$repository->url}}</h2>
             <p>{{$repository->description}}</p>
