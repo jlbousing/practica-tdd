@@ -46,6 +46,16 @@ class RepositoryControllerTest extends TestCase
             ->assertSee($repository->url);
     }
 
+    public function test_create()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get("repositories/create")
+            ->assertStatus(200);
+
+    }
+
     public function test_store()
     {
 
@@ -230,4 +240,7 @@ class RepositoryControllerTest extends TestCase
             ->get("repositories/{$repository->id}/edit")
             ->assertStatus(403);
     }
+
+
+
 }

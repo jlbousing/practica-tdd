@@ -11,6 +11,7 @@ class RepositoryController extends Controller
 {
     public function index(Request $request)
     {
+
         return view("repositories.index",[
             "repositories" => $request->user()->repositories
         ]);
@@ -26,6 +27,11 @@ class RepositoryController extends Controller
         return view("repositories.show",[
             "repository" => $repository
         ]);
+    }
+
+    public function create()
+    {
+        return view("repositories.create");
     }
 
 

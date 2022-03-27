@@ -27,7 +27,7 @@
                                 </td>
                                 <td class="px-4 py-2">
                                     <!-- EXPERIMENTANDO CON OTRO METODO PARA ACCEDER A EDIT -->
-                                    <a href="{{route("$repositories.edit",$repository)}}">Editar</a>
+                                    <a href="{{route("repositories.edit",$repository)}}">Editar</a>
                                 </td>
                             </tr>
                         @empty
