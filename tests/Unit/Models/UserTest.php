@@ -2,7 +2,11 @@
 
 namespace Tests\Unit\Models;
 
-use PHPUnit\Framework\TestCase;
+//use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
+//use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
+use App\Models\User;
 
 class UserTest extends TestCase
 {
@@ -11,8 +15,10 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_has_many_repositories()
     {
-        $this->assertTrue(true);
+        $user = new User();
+
+        $this->assertInstanceOf(Collection::class,$user->repositories);
     }
 }
